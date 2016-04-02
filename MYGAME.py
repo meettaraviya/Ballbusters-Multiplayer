@@ -348,6 +348,11 @@ while True:
             pygame.time.delay(100)
         ball1 = Ball('ballblue.png', [center[0] - 300 - 32, center[1]])
         ball2 = Ball('ballgreen.png', [center[0] + 300 - 32, center[1]])
+    elif(r2>radius and r1>radius):
+        pygame.time.delay(1000)
+        ball1 = Ball('ballblue.png', [center[0] - 300 - 32, center[1]])
+        ball2 = Ball('ballgreen.png', [center[0] + 300 - 32, center[1]])
+
     # elif 0<n%1500<800 and r2<pradius:
     #     v = ball2.speed
     #     mv = math.sqrt(v[0]*v[0]+v[1]*v[1])
