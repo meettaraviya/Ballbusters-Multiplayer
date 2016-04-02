@@ -53,38 +53,6 @@ class Ball:
     def dist(self, b2):
         return math.sqrt((self.rect.x - b2.rect.x) * (self.rect.x - b2.rect.x) + (self.rect.y - b2.rect.y) * (
             self.rect.y - b2.rect.y))
-class Button:
-    def __init__(self,center,bgc,fc,text,pad = 5):
-        l1 = pygame.font.SysFont("comicsansms", 50)
-        self.center = center
-        t = l1.size(str(text))
-        self.pad = pad
-        self.size = [t[0]+2*pad,t[1]+pad]
-        self.rect = pygame.Rect([center[0]-self.size[0]/2,center[1]-self.size[1]/2],self.size)
-        self.bgc = bgc
-        self.fc = fc
-        self.strng = text
-        self.text = l1.render(text, True, fc, bgc)
-    def display(self, screen):
-        pygame.draw.rect(screen, self.bgc, self.rect)
-        screen.blit(self.text, [self.rect[0]+self.pad, self.rect[1]+self.pad/2])
-    def react(self,pos):
-        if(pos[0]>self.rect.right or pos[0]<self.rect.left or pos[1]<self.rect.top or pos[1]>self.rect.bottom):
-            return 0
-        else:
-            bgci = self.bgc
-            for i in range(0,80):
-                self.padden(20)
-                self.bgc = (bgci[0]*(80-i)/80,bgci[1]*(80-i)/80,bgci[2]*(80-i)/80)
-                self.display(screen)
-                pygame.display.flip()
-                pygame.time.delay(5)
-            return 1
-    def padden(self,i):
-        self.pad += i
-        t = l1.size(str(self.strng))
-        self.size = [t[0]+2*self.pad,t[1]+self.pad]
-        self.rect = pygame.Rect([self.center[0]-self.size[0]/2,self.center[1]-self.size[1]/2],self.size)
 
 def arenacolor(b, g):
     if abs(g-b)<6:
@@ -94,110 +62,10 @@ def arenacolor(b, g):
     else:
         return (0, 0, 255)
 
-def helpscreen():
-    screen.fill(black)
-    b1 = Button([screen_w/2,screen_h/5],black, blue, " Just push the other player out !!", 10 )
-    b2 = Button([screen_w/2,2*screen_h/5],black, green, "First player to score 10 points wins", 10 )
-    b3 = Button([screen_w/2,3*screen_h/5],black, blue, "Press Q to quit the game midway", 10 )
-    exitb2 = Button([screen_w/2,4*screen_h/5],blue, green, "BACK", 10 )
-    b1.display(screen)
-    b2.display(screen)
-    b3.display(screen)
-    exitb2.display(screen)
-    pygame.display.flip()
-    ext = 0
-    while ext==0:
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if(exitb2.react(event.pos)==1):
-                    ext = 1
-    screen.fill(black)
-
-
-def optscreen():
-    k1 = 0
-    k2 = 2
-    screen.fill(black)
-    title = Button([screen_w/2,screen_h/6],green, blue, "BLUE", 10 )
-    b0 = Button([screen_w/2,2*screen_h/6],black, green, "W-S-A-D", 10 )
-    b1 = Button([screen_w/2,3*screen_h/6],black, green, "U-H-J-K", 10 )
-    b2 = Button([screen_w/2,4*screen_h/6],black, green, "ARROW KEYS", 10 )
-    b3 = Button([screen_w/2,5*screen_h/6],black, green, "NUMPAD 8-4-5-6", 10 )
-    title.display(screen)
-    b0.display(screen)
-    b1.display(screen)
-    b2.display(screen)
-    b3.display(screen)
-    pygame.display.flip()
-    ext = 0
-    while ext==0:
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if(b0.react(event.pos)==1):
-                    k2 = 0
-                    ext = 1
-                elif(b1.react(event.pos)==1):
-                    k2 = 1
-                    ext = 1
-                elif(b2.react(event.pos)==1):
-                    k2 = 2
-                    ext = 1
-                elif(b3.react(event.pos)==1):
-                    k2 = 3
-                    ext = 1
-    screen.fill(black)
-    title = Button([screen_w/2,screen_h/6],blue, green, "GREEN", 10 )
-    b0 = Button([screen_w/2,2*screen_h/6],black, blue, "W-S-A-D", 10 )
-    b1 = Button([screen_w/2,3*screen_h/6],black, blue, "U-H-J-K", 10 )
-    b2 = Button([screen_w/2,4*screen_h/6],black, blue, "ARROW KEYS", 10 )
-    b3 = Button([screen_w/2,5*screen_h/6],black, blue, "NUMPAD 8-4-5-6", 10 )
-    title.display(screen)
-    b0.display(screen)
-    b1.display(screen)
-    b2.display(screen)
-    b3.display(screen)
-    pygame.display.flip()
-    ext = 0
-    while ext==0:
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if(k2!=0):
-                    if(b0.react(event.pos)==1):
-                        k1 = 0
-                        ext = 1
-                        continue
-                if(k2!=1):
-                    if(b1.react(event.pos)==1):
-                        k1 = 1
-                        ext = 1
-                        continue
-                if(k2!=2):
-                    if(b2.react(event.pos)==1):
-                        k1 = 2
-                        ext = 1
-                        continue
-                if(k2!=3):
-                    if(b3.react(event.pos)==1):
-                        k1 = 3
-                        ext = 1
-    screen.fill(black)
-    return [k2,k1]
-
-
-
 wkeys = [pygame.K_w, pygame.K_a, pygame.K_s, pygame.K_d]
 ukeys = [pygame.K_u, pygame.K_h, pygame.K_j, pygame.K_k]
 upkeys = [pygame.K_UP, pygame.K_LEFT, pygame.K_DOWN, pygame.K_RIGHT]
 n8keys = [pygame.K_KP8, pygame.K_KP4, pygame.K_KP5, pygame.K_KP6]
-keynum = [wkeys,ukeys,upkeys,n8keys]
-key1 = 0
-key2 = 2
-
-red = (255,0,0)
-blue = (0,255,0)
-green = (0,0,255)
-white = (255,255,255)
-black = (0,0,0)
 
 winsound = pygame.mixer.Sound('victory.wav')
 bgmusic = pygame.mixer.Sound('bg.wav')
@@ -211,48 +79,8 @@ radius = 380
 pradius = 20
 l1 = pygame.font.SysFont("comicsansms", 50)
 
-playb = Button([screen_w/2,screen_h/5],green, blue, "PLAY", 10 )
-helpb = Button([screen_w/2,2*screen_h/5],blue, green, "HELP", 10 )
-optb = Button([screen_w/2,3*screen_h/5],green, blue, "OPTIONS", 10 )
-exitb = Button([screen_w/2,4*screen_h/5],blue, green, "EXIT", 10 )
-playb.display(screen)
-helpb.display(screen)
-optb.display(screen)
-exitb.display(screen)
-pygame.display.flip()
-
-
-choicemade = 0
-while choicemade==0:
-    pygame.display.flip()
-    for event in pygame.event.get():
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if playb.react(event.pos)==1:
-                choicemade = 1
-            elif helpb.react(event.pos)==1:
-                helpscreen()
-                helpb = Button([screen_w/2,2*screen_h/5],blue, green, "HELP", 10 )
-                playb.display(screen)
-                helpb.display(screen)
-                optb.display(screen)
-                exitb.display(screen)
-                pygame.display.flip()
-            elif optb.react(event.pos)==1:
-                [key1,key2] = optscreen()
-                optb = Button([screen_w/2,3*screen_h/5],green, blue, "OPTIONS", 10 )
-                playb.display(screen)
-                helpb.display(screen)
-                optb.display(screen)
-                exitb.display(screen)
-                pygame.display.flip()
-            elif exitb.react(event.pos)==1:
-                choicemade = 4
-                sys.exit()
-
-
-
-
-
+b1size = l1.size("PLAY")
+b1 = pygame.Rect([center[0]-b1size[0]/2, center[1]-b1size[1]/2],[b1size[0]+20,b1size[1]+20])
 # screen.blit(b1,b1)
 # screen.blit(l1.render("PLAY", True, (255, 255, 255)), b1)
 # pygame.display.flip()
@@ -288,8 +116,8 @@ while True:
         if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
             key = pygame.key.get_pressed()
 
-            ball1.update(key, keynum[key1])
-            ball2.update(key, keynum[key2])
+            ball1.update(key, wkeys)
+            ball2.update(key, upkeys)
     mdx = ball1.dist(ball2)
     if mdx < (ball1.rect.width + ball2.rect.width) / 2:
         collidesound.play(0)
