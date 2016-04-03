@@ -426,13 +426,31 @@ elif choicemade==1:
     pygame.font.init()
 
     n = 0
-    key = pygame.key.get_pressed()
     while True:
         screen.fill([0, 0, 0])
-        key = pygame.key.get_pressed()
-        if(pygame)
-                ball1.update(key,keynum[key1])
-                ball2.update(key,keynum[key2])
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
+                key = pygame.key.get_pressed()
+                x = 0.5
+                if key[keynum[key1][0]]:
+                    ball1.speed[1] -= x
+                elif key[keynum[key1][1]]:
+                    ball1.speed[0] -= x
+                elif key[keynum[key1][2]]:
+                    ball1.speed[1] += x
+                elif key[keynum[key1][3]]:
+                    ball1.speed[0] += x
+                if key[keynum[key2][0]]:
+                    ball2.speed[1] -= x
+                elif key[keynum[key2][1]]:
+                    ball2.speed[0] -= x
+                elif key[keynum[key2][2]]:
+                    ball2.speed[1] += x
+                elif key[keynum[key2][3]]:
+                    ball2.speed[0] += x
+                if key[pygame.K_q]: sys.exit()
+
+
         mdx = ball1.dist(ball2)
         if mdx < (ball1.rect.width + ball2.rect.width) / 2:
             collidesound.play(0)
